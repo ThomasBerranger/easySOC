@@ -2,37 +2,63 @@
 
 {% block title %}Log in!{% endblock %}
 
+        {% block stylesheets %}
+            <style type="text/css">
+                .app-content {
+                    min-height: calc(100vh - 50px);
+                    margin-top: 0;
+                    padding: 0;
+                }
+            </style>
+            <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        {% endblock %}
+
 {% block body %}
+    
+    <section class="login-content">
+        <section class="material-half-bg">
+            <div class="cover"></div>
+        </section>
 
-    <main class="app-content">
+        {% if error %}
+            <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+        {% endif %}
 
-        <form method="post">
-            {% if error %}
-                <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-            {% endif %}
+        <div class="login-box">
+            <form class="login-form" method="post">
+                <h3 class="login-head"><i class="fa fa-lg fa-fw fa-user"></i>SIGN IN</h3>
+                <div class="form-group">
+                    <label class="control-label">USERNAME</label>
+                    <input class="form-control" value="{{ last_username }}" name="username" id="inputUsername" type="text" placeholder="Email or username" required autofocus>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">PASSWORD</label>
+                    <input class="form-control" type="password" placeholder="Password" name="password" id="inputPassword">
+                </div>
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                <div class="form-group">
+                    <div class="utility">
+                        <div class="animated-checkbox">
+                            <label>
+                                <input type="checkbox"><span class="label-text">Stay Signed in</span>
+                            </label>
+                        </div>
+                        {#                        <p class="semibold-text mb-2"><a href="#" data-toggle="flip">Forgot Password ?</a></p>#}
+                    </div>
+                </div>
+                <div class="form-group btn-container">
+                    <button class="btn btn-primary btn-block"><i class="fa fa-sign-in fa-lg fa-fw"></i>SIGN IN</button>
+                </div>
+            </form>
+        </div>
+    </section>
 
-            <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-            <label for="inputUsername" class="sr-only">Username</label>
-            <input type="text" value="{{ last_username }}" name="username" id="inputUsername" class="form-control" placeholder="Email or username" required autofocus>
-            <label for="inputPassword" class="sr-only">Password</label>
-            <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
-
-            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-
-            <div class="checkbox mb-3">
-                <label>
-                    <input type="checkbox" name="_remember_me"> Remember me
-                </label>
-            </div>
-
-            <div class="text-center">
-                <button class="btn btn-lg btn-outline-success" type="submit">
-                    <i class="fas fa-sign-in-alt"></i>
-                    Sign in
-                </button>
-            </div>
-        </form>
-
-    </main>
+    <script type="text/javascript">
+        // Login Page Flipbox control
+        $('.login-content [data-toggle="flip"]').click(function() {
+            $('.login-box').toggleClass('flipped');
+            return false;
+        });
+    </script>
 
 {% endblock %}
