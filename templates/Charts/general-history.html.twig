@@ -1,0 +1,39 @@
+<div class="tile text-center">
+    <h3 class="tile-title">General history</h3>
+
+    <canvas id="general-history"></canvas>
+
+</div>
+
+
+<script>
+    var ctx = document.getElementById("general-history").getContext('2d');
+    var myLineChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ['02/05/18','03/05/18','04/05/18','05/05/18','06/05/18','07/05/18','08/05/18','09/05/18','10/05/18','11/05/18'],
+            datasets: [{
+                data: [10,20,30,50,70,60,50,40,40,50],
+                label: "DDOS",
+                borderColor: "#3e95cd",
+                fill: false
+            }, {
+                data: [20,40,30,30,35,35,45,60,70,80],
+                label: "XSS",
+                borderColor: "#8e5ea2",
+                fill: false
+            }
+            ]
+        },
+        options: {
+            title: {
+                display: false,
+                text: 'A title'
+            },
+            responsive: true,
+            legend: {
+                position: 'bottom',
+            }
+        },
+    });
+</script>

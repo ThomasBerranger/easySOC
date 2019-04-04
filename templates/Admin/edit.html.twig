@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title 'Edit' %}
+
+{% block body %}
+
+    <main class="app-content">
+        <div class="container">
+
+            {{ form_start(form) }}
+            {{ form_row(form.lastname) }}
+            {{ form_row(form.firstname) }}
+            {{ form_row(form.email) }}
+
+            <button type="submit" class="btn btn-outline-success">Edit</button>
+
+            {{ form_end(form) }}
+
+
+        </div>
+    </main>
+
+{% endblock %}

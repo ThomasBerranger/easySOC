@@ -1,0 +1,53 @@
+<div class="app-sidebar__overlay" data-toggle="sidebar"></div>
+<aside class="app-sidebar">
+
+    {% if app.user %}
+        <div class="app-sidebar__user">
+            <img class="app-sidebar__user-avatar" src="https://s3.amazonaws.com/uifaces/faces/twitter/jsa/48.jpg" alt="User Image">
+            <div>
+                <p class="app-sidebar__user-name">{{ app.user.firstname }}</p>
+                <p class="app-sidebar__user-designation">{{ app.user.email }}</p>
+            </div>
+        </div>
+
+        <ul class="app-menu">
+            <li>
+                <a class="app-menu__item {{ app.request.get('_route') == 'home'? 'active' : ''}}" href="{{ path('home') }}">
+                    <i class="app-menu__icon fas fa-tachometer-alt"></i>
+                    <span class="app-menu__label">Dashboard</span>
+                </a>
+            </li>
+            <li>
+                <a class="app-menu__item" href="#">
+                    <i class="app-menu__icon fas fa-home"></i>
+                    <span class="app-menu__label">Host</span>
+                </a>
+            </li>
+            <li>
+                <a class="app-menu__item" href="#">
+                    <i class="app-menu__icon fas fa-exclamation-triangle"></i>
+                    <span class="app-menu__label">Alert</span>
+                </a>
+            </li>
+            <li>
+                <a class="app-menu__item" href="#">
+                    <i class="app-menu__icon far fa-eye"></i>
+                    <span class="app-menu__label">Scan</span>
+                </a>
+            </li>
+            <li>
+                <a class="app-menu__item {{ app.request.get('_route') == 'user.list'? 'active' : ''}}" href="{{ path('user.list') }}">
+                    <i class="app-menu__icon fas fa-users"></i>
+                    <span class="app-menu__label">Users</span>
+                </a>
+            </li>
+            <li>
+                <a class="app-menu__item" href="#">
+                    <i class="app-menu__icon fas fa-headset"></i>
+                    <span class="app-menu__label">Support</span>
+                </a>
+            </li>
+        </ul>
+    {% endif %}
+
+</aside>

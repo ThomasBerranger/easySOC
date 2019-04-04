@@ -1,0 +1,25 @@
+/* --------------- template refont --------------- */
+.app-header {
+    background-color: #222d32;
+}
+
+.app-sidebar__toggle:hover, .app-sidebar__toggle:focus {
+    background-color: transparent;
+}
+
+.app-sidebar__toggle::before {
+    display: none;
+}
+
+.app-sidebar__user {
+    margin: -15px 0 -2px 0;
+}
+
+.app-header__logo {
+    font-family: 'Roboto Slab', serif;
+}
+
+body {
+    background-color: #E5E5E5;
+}
+
