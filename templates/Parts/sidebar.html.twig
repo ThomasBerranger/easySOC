@@ -24,29 +24,31 @@
                 </a>
             </li>
             <li>
-                <a class="app-menu__item" href="#">
+                <a class="app-menu__item {{ app.request.get('_route') == 'alert'? 'active' : ''}}" href="{{ path('alert') }}">
                     <i class="app-menu__icon fas fa-exclamation-triangle"></i>
                     <span class="app-menu__label">Alert</span>
                 </a>
             </li>
             <li>
-                <a class="app-menu__item" href="#">
+                <a class="app-menu__item {{ app.request.get('_route') == 'scan'? 'active' : ''}}" href="{{ path('scan') }}">
                     <i class="app-menu__icon far fa-eye"></i>
                     <span class="app-menu__label">Scan</span>
                 </a>
             </li>
             <li>
-                <a class="app-menu__item {{ app.request.get('_route') == 'user.list'? 'active' : ''}}" href="{{ path('user.list') }}">
-                    <i class="app-menu__icon fas fa-users"></i>
-                    <span class="app-menu__label">Users</span>
-                </a>
-            </li>
-            <li>
-                <a class="app-menu__item" href="#">
+                <a class="app-menu__item {{ app.request.get('_route') == 'support'? 'active' : ''}}" href="{{ path('support') }}">
                     <i class="app-menu__icon fas fa-headset"></i>
                     <span class="app-menu__label">Support</span>
                 </a>
             </li>
+            {% if is_granted('ROLE_ADMIN') %}
+                <li>
+                    <a class="app-menu__item {{ app.request.get('_route') == 'user.list'? 'active' : ''}}" href="{{ path('user.list') }}">
+                        <i class="app-menu__icon fas fa-users"></i>
+                        <span class="app-menu__label">Users</span>
+                    </a>
+                </li>
+            {% endif %}
         </ul>
     {% endif %}
 
