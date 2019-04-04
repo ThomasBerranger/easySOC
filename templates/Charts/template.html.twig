@@ -1,0 +1,29 @@
+<script>
+    var ctx = document.getElementById("{{ chartData['id'] }}").getContext('2d');
+    var myLineChart = new Chart(ctx, {
+        type: '{{ chartData['type'] }}',
+        data: {
+            labels: [{% if chartData['labels'] is iterable %}{% for label in chartData['labels'] %}'{{ label }}' {{ loop.last? '' : ',' }} {% endfor %}{% endif %}],
+            datasets: [
+                {% if chartData['dataSets'] is iterable %}{% for dataSet in chartData['dataSets'] %}
+                {
+                    data: [{% if dataSet['data'] is iterable %}{% for data in dataSet['data'] %}{{ data }} {{ loop.last? '' : ',' }} {% endfor %}{% endif %}],
+                    label: '{{ dataSet['label'] }}',
+                    borderColor: '{{ dataSet['borderColor'] }}',
+                    fill: '{{ dataSet['fill'] }}',
+                },
+                {% endfor %}{% endif %}
+            ]
+        },
+        options: {
+            title: {
+                display: {{ chartData['options']['title']['display'] }},
+                text: '{{ chartData['options']['title']['text'] }}',
+            },
+            responsive: {{ chartData['options']['responsive'] }},
+            legend: {
+                position: '{{ chartData['options']['legend']['position'] }}',
+            }
+        },
+    });
+</script>
