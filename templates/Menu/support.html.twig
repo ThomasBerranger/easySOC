@@ -6,8 +6,46 @@
 
         <div class="row">
             <div class="col-md-12">
-                <div class="tile text-center">
-                    <h3 class="tile-title">General history</h3>
+                <div class="tile">
+                    <div class="col-md-12">
+
+                        <h3 class="tile-title text-center">Ask for help</h3>
+
+                        <div class="bs-component">
+                            {% for message in app.flashes('success') %}
+                                <div class="alert alert-dismissible alert-success">
+                                    <button class="close" type="button" data-dismiss="alert">×</button>
+                                    <strong>{{ message }}</strong>
+                                </div>
+                            {% endfor %}
+                            {% for message in app.flashes('error') %}
+                                <div class="alert alert-dismissible alert-danger">
+                                    <button class="close" type="button" data-dismiss="alert">×</button>
+                                    <strong>{{ message }}</strong>
+                                </div>
+                            {% endfor %}
+                        </div>
+
+                        <form action="{{ path('support') }}" method="post">
+                            <div class="form-group">
+                                <label for="mail">Email</label>
+                                <input class="form-control" id="mail" name="email" type="email" value="{{ app.user.email }}" disabled>
+                            </div>
+                            <div class="form-group">
+                                <label for="order">Order</label>
+                                <input class="form-control" id="order" type="text" name="order">
+                                <small class="form-text text-muted" id="emailHelp">Explain the subject in several word.</small>
+                            </div>
+                            <div class="form-group">
+                                <label for="content">Message</label>
+                                <textarea class="form-control" id="content" rows="3" name="content"></textarea>
+                                <small class="form-text text-muted" id="emailHelp">Tell us more about your problem, we'll do our best to fix it as fast as we can.</small>
+                            </div>
+                            <div class="tile-footer">
+                                <button class="btn btn-primary" type="submit">Forward my message</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>

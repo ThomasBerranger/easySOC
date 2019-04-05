@@ -16,12 +16,10 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 class SecurityController extends AbstractController
 {
-    private $em;
     private $slackManager;
 
-    public function __construct(EntityManagerInterface $em, SlackManager $slackManager)
+    public function __construct(SlackManager $slackManager)
     {
-        $this->em = $em;
         $this->slackManager = $slackManager;
     }
 
