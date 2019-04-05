@@ -41,6 +41,8 @@ class MenuController extends AbstractController
     {
         $alerts = $this->getDoctrine()->getRepository(Alert::class)->findBy([], ['created_at' => 'DESC']);
 
+//        dump($alerts);die;
+
         return $this->render('menu/alert.html.twig', array(
             'alerts' => $alerts,
         ));
