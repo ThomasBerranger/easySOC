@@ -29,7 +29,7 @@ class MenuController extends AbstractController
         $generalLogHistory = $this->alertService->getGeneralLogHistory();
 
         return $this->render('Menu/home.html.twig', array(
-            'generalAttackHistory' => $generalAttackHistory,
+            'chartData' => $generalAttackHistory,
             'generalLogHistory' => $generalLogHistory,
         ));
     }
@@ -39,10 +39,12 @@ class MenuController extends AbstractController
      */
     public function alert()
     {
-        $alerts = $this->alertService->getFormattedAlerts();
+        $formattedAlertsData = $this->alertService->getFormattedAlerts();
+        $alerts = $this->getDoctrine()->getRepository(Alert::class)->findBy([], ['created_at' => 'desc']);
 
         return $this->render('Menu/alert.html.twig', array(
             'alerts' => $alerts,
+            'chartData' => $formattedAlertsData,
         ));
     }
 

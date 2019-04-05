@@ -1,13 +1,13 @@
 <script>
-    var ctx = document.getElementById("{{ generalAttackHistory['id'] }}").getContext('2d');
+    var ctx = document.getElementById("{{ chartData['id'] }}").getContext('2d');
     var myLineChart = new Chart(ctx, {
-        type: '{{ generalAttackHistory['type'] }}',
+        type: '{{ chartData['type'] }}',
         data: {
-            labels: [{% if generalAttackHistory['labels'] is iterable %}{% for label in generalAttackHistory['labels'] %}'{{ label }}' {{ loop.last? '' : ',' }} {% endfor %}{% endif %}],
+            labels: [{% if chartData['labels'] is iterable %}{% for label in chartData['labels'] %}'{{ label }}'{{ loop.last? '' : ',' }} {% endfor %}{% endif %}],
             datasets: [
-                {% if generalAttackHistory['dataSets'] is iterable %}{% for dataSet in generalAttackHistory['dataSets'] %}
+                {% if chartData['dataSets'] is iterable %}{% for dataSet in chartData['dataSets'] %}
                 {
-                    data: [{% if dataSet['data'] is iterable %}{% for data in dataSet['data'] %}{{ data }} {{ loop.last? '' : ',' }} {% endfor %}{% endif %}],
+                    data: [{% if dataSet['data'] is iterable %}{% for data in dataSet['data'] %}{{ data }}{{ loop.last? '' : ',' }} {% endfor %}{% endif %}],
                     label: '{{ dataSet['label'] }}',
                     borderColor: '{{ dataSet['borderColor'] }}',
                     fill: '{{ dataSet['fill'] }}',
@@ -17,12 +17,12 @@
         },
         options: {
             title: {
-                display: {{ generalAttackHistory['options']['title']['display'] }},
-                text: '{{ generalAttackHistory['options']['title']['text'] }}',
+                display: {{ chartData['options']['title']['display'] }},
+                text: '{{ chartData['options']['title']['text'] }}',
             },
-            responsive: {{ generalAttackHistory['options']['responsive'] }},
+            responsive: {{ chartData['options']['responsive'] }},
             legend: {
-                position: '{{ generalAttackHistory['options']['legend']['position'] }}',
+                position: '{{ chartData['options']['legend']['position'] }}',
             }
         },
     });
