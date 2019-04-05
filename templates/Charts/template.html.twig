@@ -1,11 +1,11 @@
 <script>
-    var ctx = document.getElementById("{{ chartData['id'] }}").getContext('2d');
+    var ctx = document.getElementById("{{ generalAttackHistory['id'] }}").getContext('2d');
     var myLineChart = new Chart(ctx, {
-        type: '{{ chartData['type'] }}',
+        type: '{{ generalAttackHistory['type'] }}',
         data: {
-            labels: [{% if chartData['labels'] is iterable %}{% for label in chartData['labels'] %}'{{ label }}' {{ loop.last? '' : ',' }} {% endfor %}{% endif %}],
+            labels: [{% if generalAttackHistory['labels'] is iterable %}{% for label in generalAttackHistory['labels'] %}'{{ label }}' {{ loop.last? '' : ',' }} {% endfor %}{% endif %}],
             datasets: [
-                {% if chartData['dataSets'] is iterable %}{% for dataSet in chartData['dataSets'] %}
+                {% if generalAttackHistory['dataSets'] is iterable %}{% for dataSet in generalAttackHistory['dataSets'] %}
                 {
                     data: [{% if dataSet['data'] is iterable %}{% for data in dataSet['data'] %}{{ data }} {{ loop.last? '' : ',' }} {% endfor %}{% endif %}],
                     label: '{{ dataSet['label'] }}',
@@ -17,12 +17,12 @@
         },
         options: {
             title: {
-                display: {{ chartData['options']['title']['display'] }},
-                text: '{{ chartData['options']['title']['text'] }}',
+                display: {{ generalAttackHistory['options']['title']['display'] }},
+                text: '{{ generalAttackHistory['options']['title']['text'] }}',
             },
-            responsive: {{ chartData['options']['responsive'] }},
+            responsive: {{ generalAttackHistory['options']['responsive'] }},
             legend: {
-                position: '{{ chartData['options']['legend']['position'] }}',
+                position: '{{ generalAttackHistory['options']['legend']['position'] }}',
             }
         },
     });

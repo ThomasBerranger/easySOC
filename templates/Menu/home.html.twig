@@ -7,10 +7,10 @@
         <div class="row">
             <div class="col-md-9">
                 <div class="tile text-center">
-                    <h3 class="tile-title">General history</h3>
+                    <h3 class="tile-title">General attack history</h3>
                     <canvas id="general-history"></canvas>
                 </div>
-                {% include 'Charts/template.html.twig' with chartData %}
+                {% include 'Charts/template.html.twig' with generalAttackHistory %}
             </div>
             <div class="col-3">
                 <div class="row">
@@ -48,31 +48,23 @@
         <div class="row">
             <div class="col-12">
                 <div class="tile">
-
+                    <h3 class="tile-title text-center">General log history</h3>
                     <table id="vulnerabilities" class="table table-hover table-bordered dataTable no-footer" width="100%">
                         <thead>
                         <tr>
-                            <th scope="col">ID</th>
-                            <th scope="col">Name</th>
-                            <th scope="col">Lastname</th>
+                            <th scope="col">#</th>
+                            <th scope="col">Type</th>
+                            <th scope="col">Date</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>Mark</td>
-                            <td>Otto</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">2</th>
-                            <td>Jacob</td>
-                            <td>Thornton</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">3</th>
-                            <td>Larry</td>
-                            <td>the Bird</td>
-                        </tr>
+                        {% for log in generalLogHistory %}
+                            <tr>
+                                <th scope="row">{{ loop.index }}</th>
+                                <td>{{ log.type }}</td>
+                                <td>{{ log.createdAt|date('d/m/Y') }}</td>
+                            </tr>
+                        {% endfor %}
                         </tbody>
                     </table>
 
