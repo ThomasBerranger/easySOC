@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Alert;
 use App\Service\MenuService;
 use App\Service\SlackManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -38,7 +39,11 @@ class MenuController extends AbstractController
      */
     public function alert()
     {
-        return $this->render('menu/alert.html.twig');
+        $alerts = $this->getDoctrine()->getRepository(Alert::class)->findBy([], ['created_at' => 'DESC']);
+
+        return $this->render('menu/alert.html.twig', array(
+            'alerts' => $alerts,
+        ));
     }
 
     /**

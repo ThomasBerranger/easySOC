@@ -4,13 +4,49 @@
 
     <main class="app-content">
 
+        <div class="row">
+            <div class="col-12">
+                <div class="tile">
+                    <h3 class="tile-title text-center">Alerts</h3>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <div class="tile">
+                    <h3 class="tile-title text-center">Alerts history</h3>
+                    <table id="alerts" class="table table-hover table-bordered dataTable no-footer" width="100%">
+                        <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Type</th>
+                            <th scope="col">Date</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for alert in alerts %}
+                            <tr>
+                                <th scope="row">{{ loop.index }}</th>
+                                <td>{{ alert.type }}</td>
+                                <td>{{ alert.createdAt|date('d/m/Y') }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
     </main>
 
 {% endblock %}
 
 {% block javascripts %}
     <script>
-
+        $(document).ready( function () {
+            $('#alerts').DataTable();
+        } );
     </script>
 {% endblock %}
-
