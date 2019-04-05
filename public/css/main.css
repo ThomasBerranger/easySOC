@@ -2559,14 +2559,14 @@ fieldset:disabled a.btn {
 
 .btn-primary {
   color: #FFF;
-  background-color: #009688;
-  border-color: #009688;
+  background-color:#44BD6D;
+  border-color: #44BD6D;
 }
 
 .btn-primary:hover {
   color: #FFF;
-  background-color: #007065;
-  border-color: #00635a;
+  background-color: #44BD6D;
+  border-color: #44BD6D;
 }
 
 .btn-primary:focus, .btn-primary.focus {
@@ -13576,7 +13576,7 @@ be a descendant of the grid when it is being dragged.
   }
 }
 
-.app-header__logo {
+/*.app-header__logo {
   -webkit-box-flex: 1;
       -ms-flex: 1 0 auto;
           flex: 1 0 auto;
@@ -13587,18 +13587,25 @@ be a descendant of the grid when it is being dragged.
   font-size: 26px;
   font-weight: 400;
   line-height: 50px;
-}
+}*/
 
-@media (min-width: 768px) {
+/*@media (min-width: 768px) {*/
   .app-header__logo {
     -webkit-box-flex: 0;
         -ms-flex: 0 0 auto;
             flex: 0 0 auto;
     display: block;
     width: 230px;
-    background-color: #F3F3F3;
+    background-color: #FFFFFF;
+    color: #fff;
+    text-align: center;
+    font-family: 'Niconne';
+    padding: 0 15px;
+    font-size: 26px;
+    font-weight: 400;
+    line-height: 50px;
   }
-}
+/*}*/
 
 .app-header__logo:focus, .app-header__logo:hover {
   text-decoration: none;
@@ -14526,7 +14533,7 @@ be a descendant of the grid when it is being dragged.
 }
 
 .material-half-bg .cover {
-  background-color: #009688;
+  background-color: #E5E5E5;
   height: 50vh;
 }
 
@@ -14708,7 +14715,7 @@ be a descendant of the grid when it is being dragged.
 }
 
 .widget-small.primary.coloured-icon .icon {
-  background-color: #009688;
+  background-color:#44BD6D;
   color: #fff;
 }
 
@@ -14722,7 +14729,7 @@ be a descendant of the grid when it is being dragged.
 }
 
 .widget-small.info.coloured-icon .icon {
-  background-color: #17a2b8;
+  background-color: #17A293;
   color: #fff;
 }
 

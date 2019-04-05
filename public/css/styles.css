@@ -17,6 +17,7 @@
 
 .app-header__logo {
     font-family: 'Roboto Slab', serif;
+    margin-top: -2px;
 }
 
 body {

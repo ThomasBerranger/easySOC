@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title 'Hosts' %}
+
+{% block body %}
+
+    <main class="app-content">
+
+        <div class="row">
+            <div class="col-12">
+                <div class="tile">
+                    <a href="{{ path('host.create') }}" class="btn btn-primary">Ajouter</a>                    
+                    <table id="hosts" class="table table-hover table-bordered dataTable no-footer">
+                        <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">OS</th>
+                            <th scope="col">Port</th>
+                            <th scope="col"></th>
+                            <th scope="col"></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for host in hosts %}
+                            <tr>
+                                <td scope="row" class="align-middle">{{ host.id }}</td>
+                                <td class="align-middle">{{ host.OS }}</td>
+                                <td class="align-middle">{{ host.Port }}</td>
+                                <td class="align-middle">
+                                    <a href="{{ path('host.edit', {id: host.id}) }}" class="btn btn-primary">Editer</a>
+                                </td>
+                                <td class="align-middle">
+                                    <form method="post" action ="{{ path('host.delete', {id: host.id})}}">
+                                        <input type="hidden" name="_method" value="DELETE">
+                                        <button class="btn btn-danger">Supprimer</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        $(document).ready( function () {
+            $('#hosts').DataTable();
+        } );
+    </script>
+{% endblock %}

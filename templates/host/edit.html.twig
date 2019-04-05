@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title 'Edit Host' %}
+
+{% block body %}
+
+    <main class="app-content">
+        <div class="container">
+
+            {{ form_start(form) }}
+            {{ form_row(form.OS) }}
+            {{ form_row(form.Port) }}
+
+            <button type="submit" class="btn btn-outline-success">Edit</button>
+
+            {{ form_end(form) }}
+
+
+        </div>
+    </main>
+
+{% endblock %}
