@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Alert;
-use App\Service\MenuService;
+use App\Service\AlertService;
 use App\Service\SlackManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
@@ -11,12 +11,12 @@ use Symfony\Component\Routing\Annotation\Route;
 class MenuController extends AbstractController
 {
     private $slackManager;
-    private $menuService;
+    private $alertService;
 
-    public function __construct(SlackManager $slackManager, MenuService $menuService)
+    public function __construct(SlackManager $slackManager, AlertService $alertService)
     {
         $this->slackManager = $slackManager;
-        $this->menuService = $menuService;
+        $this->alertService = $alertService;
     }
 
     /**
@@ -24,11 +24,11 @@ class MenuController extends AbstractController
      */
     public function home()
     {
-        $generalAttackHistory = $this->menuService->getGeneralAttackHistory();
+        $generalAttackHistory = $this->alertService->getGeneralAttackHistory();
 
-        $generalLogHistory = $this->menuService->getGeneralLogHistory();
+        $generalLogHistory = $this->alertService->getGeneralLogHistory();
 
-        return $this->render('menu/home.html.twig', array(
+        return $this->render('Menu/home.html.twig', array(
             'generalAttackHistory' => $generalAttackHistory,
             'generalLogHistory' => $generalLogHistory,
         ));
@@ -39,11 +39,9 @@ class MenuController extends AbstractController
      */
     public function alert()
     {
-        $alerts = $this->getDoctrine()->getRepository(Alert::class)->findBy([], ['created_at' => 'DESC']);
+        $alerts = $this->alertService->getFormattedAlerts();
 
-//        dump($alerts);die;
-
-        return $this->render('menu/alert.html.twig', array(
+        return $this->render('Menu/alert.html.twig', array(
             'alerts' => $alerts,
         ));
     }
@@ -53,7 +51,7 @@ class MenuController extends AbstractController
      */
     public function scan()
     {
-        return $this->render('menu/scan.html.twig');
+        return $this->render('Menu/scan.html.twig');
     }
 
     /**
@@ -79,6 +77,6 @@ class MenuController extends AbstractController
             $this->addFlash('error', 'Please describe your problem.');
         }
 
-        return $this->render('menu/support.html.twig');
+        return $this->render('Menu/support.html.twig');
     }
 }

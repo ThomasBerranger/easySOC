@@ -31,7 +31,7 @@ class AdminUserController extends AbstractController
 
         $users = $this->em->getRepository(User::class)->findAll();
 
-        return $this->render('admin/index.html.twig', ['users' => $users]);
+        return $this->render('Admin/index.html.twig', ['users' => $users]);
     }
 
     /**
@@ -54,7 +54,7 @@ class AdminUserController extends AbstractController
             return $this->redirectToRoute('user.list');
         }
 
-        return $this->render('admin/edit.html.twig', [
+        return $this->render('Admin/edit.html.twig', [
             'form' => $form->createView()
         ]);
     }

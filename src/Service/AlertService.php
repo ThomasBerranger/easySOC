@@ -5,7 +5,7 @@ namespace App\Service;
 use App\Entity\Alert;
 use Doctrine\ORM\EntityManagerInterface;
 
-class MenuService
+class AlertService
 {
     private $em;
 
@@ -52,6 +52,15 @@ class MenuService
     public function getGeneralLogHistory()
     {
         $alerts = $this->em->getRepository(Alert::class)->findBy([], ['created_at' => 'DESC']);
+
+        return $alerts;
+    }
+
+    public function getFormattedAlerts()
+    {
+        $alerts = $this->em->getRepository(Alert::class)->findBy([], ['created_at' => 'DESC']);
+
+//        dump($alerts);die;
 
         return $alerts;
     }
