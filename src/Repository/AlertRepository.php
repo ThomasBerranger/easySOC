@@ -19,22 +19,22 @@ class AlertRepository extends ServiceEntityRepository
         parent::__construct($registry, Alert::class);
     }
 
-    // /**
-    //  * @return Alert[] Returns an array of Alert objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * @return Alert[] Returns an array of Alert objects
+     */
+    public function findByDatesComparator($since, $to)
     {
         return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('a.id', 'ASC')
-            ->setMaxResults(10)
+            ->andWhere('a.created_at >= :since')
+            ->andWhere('a.created_at <= :to')
+            ->setParameter('since', $since)
+            ->setParameter('to', $to)
+//            ->orderBy('a.id', 'ASC')
+//            ->setMaxResults(10)
             ->getQuery()
             ->getResult()
-        ;
+            ;
     }
-    */
 
     /*
     public function findOneBySomeField($value): ?Alert

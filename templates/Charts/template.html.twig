@@ -10,7 +10,7 @@
                     data: [{% if dataSet['data'] is iterable %}{% for data in dataSet['data'] %}{{ data }}{{ loop.last? '' : ',' }} {% endfor %}{% endif %}],
                     label: '{{ dataSet['label'] }}',
                     borderColor: '{{ dataSet['borderColor'] }}',
-                    fill: '{{ dataSet['fill'] }}',
+                    fill: {{ dataSet['fill'] }},
                 },
                 {% endfor %}{% endif %}
             ]

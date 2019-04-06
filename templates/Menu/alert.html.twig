@@ -8,6 +8,7 @@
             <div class="col-12">
                 <div class="tile">
                     <h3 class="tile-title text-center">Alerts</h3>
+                    {#                    <p><a class="btn btn-primary icon-btn" href="" target="_blank"><i class="fa fa-file"></i>Refresh</a></p>#}
                     {#                    <div class="overlay">#}
                     {#                        <div class="m-loader mr-4">#}
                     {#                            <svg class="m-circular" viewBox="25 25 50 50">#}
@@ -18,10 +19,34 @@
                     {#                    </div>#}
                     <canvas id="alerts-chart"></canvas>
                     {% include 'charts/template.html.twig' with chartData %}
+
+                    <form class="row" method="post">
+                        <span class="align-middle ml-5 mt-2 font-weight-bold">Compare :</span>
+                        <div class="form-group col-1">
+                            <select name="since" id="since" class="form-control">
+                                <option value="2019">2019</option>
+                                <option value="2018">2018</option>
+                                <option value="2017">2017</option>
+                                <option value="2016">2016</option>
+                            </select>
+                        </div>
+                        <span class="align-middle ml-3 mt-2 font-weight-bold">With :</span>
+                        <div class="form-group col-1">
+                            <select name="to" id="to" class="form-control">
+                                <option value="2019">2019</option>
+                                <option value="2018">2018</option>
+                                <option value="2017">2017</option>
+                                <option value="2016">2016</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-1 align-self-end">
+                            <button class="btn btn-secondary" type="submit">Apply comparison</button>
+                        </div>
+                    </form>
+
                 </div>
             </div>
         </div>
-
 
         <div class="row">
             <div class="col-12">
@@ -47,9 +72,6 @@
                     </table>
                 </div>
             </div>
-        </div>
-
-        </div>
         </div>
 
     </main>

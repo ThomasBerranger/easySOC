@@ -57,43 +57,44 @@ class AlertService
         return $alerts;
     }
 
-    public function getFormattedAlerts()
+    public function getFormattedAlerts($alerts, $since, $to)
     {
-        $alerts = $this->em->getRepository(Alert::class)->findBy([], ['created_at' => 'DESC']);
-
-        $alertsByMonth = $this->getAlertsNumberByMonth($alerts);
+        $alertsByMonth = $this->formatAlerts($alerts, $since, $to);
 
         return $alertsByMonth;
     }
 
-    private function getAlertsNumberByMonth($alerts)
+    private function formatAlerts($alerts, $since, $to)
     {
-        $alertsByMonth = [];
         $months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+        $alertsByMonth = [];
+        $alertsByMonth2 = [];
 
         foreach ($months as $month) {
             $alertsByMonth[$month] = 0;
+            $alertsByMonth2[$month] = 0;
         }
 
         /** @var Alert $alert */
         foreach ($alerts as $alert) {
             foreach ($months as $key => $month) {
-                if (new DateTime('first day of '.$month) <= $alert->getCreatedAt() && $alert->getCreatedAt() <= new DateTime('first day of '.$months[$key+1])) {
-                    $alertsByMonth[$month] = $alertsByMonth[$month] +1;
+                if (new DateTime('first day of '.$month.' '.$since) <= $alert->getCreatedAt() && $alert->getCreatedAt() <= new DateTime('last day of '.$month.' '.$since.' 23:59:59.59')) {
+                    $alertsByMonth[$month] = $alertsByMonth[$month] + 1;
+                    break;
                 }
             }
         }
 
-        $formattedAttacksData = [
+        $formattedAlertsData = [
             'id' => 'alerts-chart',
             'type' => 'line',
             'labels' => $months,
             'dataSets' => [
                 [
                     'data' => $alertsByMonth,
-                    'label' => "Alerts number",
-                    'borderColor' => "red",
-                    'fill' => 1
+                    'label' => $since,
+                    'borderColor' => "#E8414A",
+                    'fill' => 0
                 ],
             ],
             'options' => [
@@ -108,6 +109,24 @@ class AlertService
             ],
         ];
 
-        return $formattedAttacksData;
+        if ($to) {
+            /** @var Alert $alert */
+            foreach ($alerts as $alert) {
+                foreach ($months as $key => $month) {
+                    if (new DateTime('first day of '.$month.' '.$to) <= $alert->getCreatedAt() && $alert->getCreatedAt() <= new DateTime('last day of '.$month.' '.$to.' 23:59:59.59')) {
+                        $alertsByMonth2[$month] = $alertsByMonth2[$month] + 1;
+                        break;
+                    }
+                }
+            }
+            array_push($formattedAlertsData['dataSets'], [
+                'data' => $alertsByMonth2,
+                'label' => $to,
+                'borderColor' => "#3e95cd",
+                'fill' => 0
+            ]);
+        }
+
+        return $formattedAlertsData;
     }
 }

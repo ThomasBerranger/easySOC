@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Alert;
 use App\Service\AlertService;
 use App\Service\SlackManager;
+use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -39,8 +40,12 @@ class MenuController extends AbstractController
      */
     public function alert()
     {
-        $formattedAlertsData = $this->alertService->getFormattedAlerts();
+        key_exists('since', $_POST)? $since = $_POST['since'] : $since = date('Y');
+        key_exists('to', $_POST) && $_POST['since'] != $_POST['to']? $to = $_POST['to'] : $to = null;
+
         $alerts = $this->getDoctrine()->getRepository(Alert::class)->findBy([], ['created_at' => 'desc']);
+
+        $formattedAlertsData = $this->alertService->getFormattedAlerts($alerts, $since, $to);
 
         return $this->render('Menu/alert.html.twig', array(
             'alerts' => $alerts,
