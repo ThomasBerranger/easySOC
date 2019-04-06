@@ -11,7 +11,7 @@
                 <div class="tile">
                     <h3 class="tile-title text-center">Users list</h3>
 
-                    <a href="{{ path('register') }}" class="btn btn-success"><i class="fas fa-user-plus"></i>&nbsp; Create a new user</a>
+                    <a href="{{ path('register') }}" class="btn btn-success"><i class="fas fa-user-plus"></i>&nbsp; Create a new user account</a>
                     <br><br>
 
                     <table id="users" class="table table-hover table-bordered dataTable no-footer">
@@ -34,14 +34,12 @@
                                 <td class="align-middle">{{ user.firstname }}</td>
                                 <td class="align-middle">{{ user.email }}</td>
                                 <td class="align-middle">{{ user.company? user.company.name : null }}</td>
-                                <td class="align-middle">
-                                    <a href="{{ path('user.edit', {id: user.id}) }}" class="btn btn-primary">Editer</a>
+                                <td class="align-middle text-center">
+                                    <a href="{{ path('user.edit', {id: user.id}) }}" class="btn btn-primary"><i class="fas fa-edit"></i>&nbsp; Edit</a>
                                 </td>
-                                <td class="align-middle">
-                                    <form method="post" action ="{{ path('user.delete', {id: user.id})}}">
-                                        <input type="hidden" name="_method" value="DELETE">
-                                        <button class="btn btn-danger">Supprimer</button>
-                                    </form>
+                                <td class="align-middle text-center">
+                                    {#                                    <a href="{{ path('user.delete', {id: user.id}) }}" class="btn btn-danger" onclick="return confirm('Are you sure');">Supprimer</a>#}
+                                    <a href="#" class="btn btn-danger demoSwal" data-user-id="{{ user.id }}"><i class="far fa-trash-alt"></i>&nbsp; Delete</a>
                                 </td>
                             </tr>
                         {% endfor %}
@@ -54,7 +52,6 @@
 
     </main>
 
-
 {% endblock %}
 
 {% block javascripts %}
@@ -62,5 +59,27 @@
         $(document).ready( function () {
             $('#users').DataTable();
         } );
+
+        $('.demoSwal').click(function(){
+            userId = $(this).data('user-id');
+            swal({
+                title: "Are you sure ?",
+                text: "You will not be able to recover this account !",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Yes, delete it",
+                cancelButtonText: "No, cancel",
+                closeOnConfirm: false,
+                closeOnCancel: true
+            }, function(isConfirm) {
+                if (isConfirm) {
+                    window.location = "{{ path('user.delete') }}/"+userId;
+                    // swal("Deleted!", "Your imaginary file has been deleted.", "success");
+                }
+                // else {
+                //     swal("Cancelled", "Your imaginary file is safe :)", "error");
+                // }
+            });
+        });
     </script>
 {% endblock %}

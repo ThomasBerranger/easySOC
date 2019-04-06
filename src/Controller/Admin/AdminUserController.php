@@ -27,9 +27,16 @@ class AdminUserController extends AbstractController
     /**
      * @Route("/admin/user/", name="user.list")
      */
-    public function index() {
-
+    public function index()
+    {
         $users = $this->em->getRepository(User::class)->findAll();
+
+        /** @var User $user */
+        foreach ($users as $key => $user) {
+            if (in_array('ROLE_ADMIN', $user->getRoles()) || in_array('ROLE_SUPER_ADMIN', $user->getRoles())) {
+                unset($users[$key]);
+            }
+        }
 
         return $this->render('Admin/index.html.twig', ['users' => $users]);
     }
@@ -62,10 +69,14 @@ class AdminUserController extends AbstractController
     /**
      * @Route("/admin/user/delete/{id}", name="user.delete")
      */
-    public function delete(User $user, Request $request)
+    public function delete($id = null)
     {
+        if ($id) {
+            $user = $this->getDoctrine()->getRepository(User::class)->find($id);
+
             $this->em->remove($user);
             $this->em->flush();
+        }
 
         return $this->redirectToRoute('user.list');
 

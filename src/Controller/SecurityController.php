@@ -17,10 +17,12 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 class SecurityController extends AbstractController
 {
     private $slackManager;
+    private $entityManager;
 
-    public function __construct(SlackManager $slackManager)
+    public function __construct(SlackManager $slackManager, EntityManagerInterface $entityManager)
     {
         $this->slackManager = $slackManager;
+        $this->entityManager = $entityManager;
     }
 
     /**
@@ -53,12 +55,12 @@ class SecurityController extends AbstractController
             $user->setUsername(strtolower($user->getFirstname().'.'.$user->getLastname()));
             $this->getUser()->getCompany()? $user->setCompany($this->getUser()->getCompany()) : $user->setCompany(null);
 
-            $this->em->persist($user);
-            $this->em->flush();
+            $this->entityManager->persist($user);
+            $this->entityManager->flush();
 
             $this->slackManager->sendMessage($this->getUser()->getUsername().' vient de créer le compte : '.$user->getId().' (id) '.$user->getUsername().' (username).');
 
-            return $this->redirectToRoute('home');
+            return $this->redirectToRoute('user.list');
         }
 
         return $this->render('Security/register.html.twig', [
@@ -81,8 +83,8 @@ class SecurityController extends AbstractController
             $form->getConfig()->getData()->setPlainPassword(''); // Evite l'erreur plainPassword blank
             $user->setUsername(strtolower($user->getFirstname().'.'.$user->getLastname()));
 
-            $this->em->persist($user);
-            $this->em->flush();
+            $this->entityManager->persist($user);
+            $this->entityManager->flush();
 
             $this->slackManager->sendMessage($this->getUser()->getId().' (id) '.$this->getUser()->getUsername().' (username) vient de modifier son compte.');
 
