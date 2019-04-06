@@ -7,17 +7,26 @@
     <main class="app-content">
         <div class="container">
 
-            {{ form_start(form) }}
+            <div class="row">
+                <div class="col-12">
+                    <div class="tile">
+                        <h3 class="tile-title text-center">Account edition</h3>
 
-            {{ form_row(form.firstname) }}
-            {{ form_row(form.lastname) }}
-            {{ form_row(form.email) }}
+                        {{ form_start(form) }}
 
-            <div class="text-center">
-                <button type="submit" class="btn btn-outline-success"><i class="fas fa-edit"></i> Edit</button>
+                        {{ form_row(form.firstname) }}
+                        {{ form_row(form.lastname) }}
+                        {{ form_row(form.email) }}
+
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-outline-success"><i class="fas fa-save"></i> Save changes</button>
+                        </div>
+
+                        {{ form_end(form) }}
+
+                    </div>
+                </div>
             </div>
-
-            {{ form_end(form) }}
 
         </div>
     </main>
