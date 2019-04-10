@@ -2,7 +2,9 @@
 
 namespace App\Form;
 
+use App\Entity\Company;
 use App\Entity\User;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
@@ -31,9 +33,10 @@ class UserType extends AbstractType
             ));
         }
         elseif ($options['route'] == 'security.edit') {
-            $builder->add('plainPassword', HiddenType::class, array( // Evite l'erreur plainPassword blank
-                'data' => "Lorem ipsum",
-            ));
+            $builder
+                ->add('plainPassword', HiddenType::class, array( // Evite l'erreur plainPassword blank
+                    'data' => "Lorem ipsum",
+                ));
         }
         elseif ($options['route'] == 'user.edit') {
             $builder
@@ -41,6 +44,24 @@ class UserType extends AbstractType
                 ->add('lastname', TextType::class)
                 ->add('plainPassword', HiddenType::class, array( // Evite l'erreur plainPassword blank
                     'data' => "Lorem ipsum",
+                ))
+                ->add('company', EntityType::class, array(
+                    'required' => false,
+                    'class' => Company::class,
+                    'choice_label' => 'name',
+                ));
+        } elseif ($options['route'] == 'security.password') {
+            $builder
+                ->remove('email')
+                ->remove('firstname')
+                ->remove('lastname')
+                ->add('oldPassword', PasswordType::class, array(
+                    'mapped' => false
+                ))
+                ->add('plainPassword', RepeatedType::class, array(
+                    'type' => PasswordType::class,
+                    'first_options' => array('label' => 'New password'),
+                    'second_options' => array('label' => 'Repeat new password'),
                 ));
         }
     }

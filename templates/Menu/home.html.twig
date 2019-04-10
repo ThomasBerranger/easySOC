@@ -5,6 +5,27 @@
     <main class="app-content">
 
         <div class="row">
+            <div class="col-md-12">
+                {% for message in app.flashes('success') %}
+                    <div class="bs-component">
+                        <div class="alert alert-dismissible alert-success">
+                            <button class="close" type="button" data-dismiss="alert">×</button>
+                            <strong>{{ message }}</strong>
+                        </div>
+                    </div>
+                {% endfor %}
+                {% for message in app.flashes('error') %}
+                    <div class="bs-component">
+                        <div class="alert alert-dismissible alert-danger">
+                            <button class="close" type="button" data-dismiss="alert">×</button>
+                            <strong>{{ message }}</strong>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="row">
             <div class="col-md-9">
                 <div class="tile text-center">
                     <h3 class="tile-title">General attack history</h3>

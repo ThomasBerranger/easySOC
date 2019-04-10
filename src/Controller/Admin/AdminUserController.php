@@ -2,7 +2,9 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Company;
 use App\Entity\User;
+use App\Form\CompanyType;
 use App\Form\UserType;
 use App\Service\SlackManager;
 use Doctrine\ORM\EntityManagerInterface;
@@ -79,7 +81,76 @@ class AdminUserController extends AbstractController
         }
 
         return $this->redirectToRoute('user.list');
-
     }
 
+    /**
+     * @Route("/admin/company", name="company.list")
+     */
+    public function indexCompany()
+    {
+        $companies = $this->getDoctrine()->getRepository(Company::class)->findAll();
+
+        return $this->render('Company/Admin/index.html.twig', array(
+            'companies' => $companies,
+        ));
+    }
+
+    /**
+     * @Route("/admin/company/add/", name="company.add")
+     */
+    public function addCompany(Request $request)
+    {
+        $company = new Company();
+
+        $form = $this->createForm(CompanyType::class, $company);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $this->em->persist($company);
+            $this->em->flush();
+
+            return $this->redirectToRoute('company.list');
+        }
+
+        return $this->render('Company/Admin/add.html.twig', [
+            'form' => $form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/admin/company/edit/{id}", name="company.edit")
+     */
+    public function editCompany(Request $request, Company $company)
+    {
+        $form = $this->createForm(CompanyType::class, $company);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $this->em->persist($company);
+            $this->em->flush();
+
+            return $this->redirectToRoute('company.list');
+        }
+
+        return $this->render('Company/Admin/edit.html.twig', [
+            'form' => $form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/admin/company/delete/{id}", name="company.delete")
+     */
+    public function companyDelete($id = null)
+    {
+        if ($id) {
+            $company = $this->getDoctrine()->getRepository(Company::class)->find($id);
+
+            $this->em->remove($company);
+            $this->em->flush();
+        }
+
+        return $this->redirectToRoute('company.list');
+    }
 }

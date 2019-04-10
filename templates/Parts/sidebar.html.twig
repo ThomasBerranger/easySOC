@@ -48,6 +48,12 @@
                         <span class="app-menu__label">Users</span>
                     </a>
                 </li>
+                <li>
+                    <a class="app-menu__item {{ app.request.get('_route') == 'company.list'? 'active' : ''}}" href="{{ path('company.list') }}">
+                        <i class="app-menu__icon fas fa-building"></i>
+                        <span class="app-menu__label">Companies</span>
+                    </a>
+                </li>
             {% endif %}
         </ul>
     {% endif %}

@@ -7,9 +7,11 @@ use App\Form\UserType;
 use App\Service\SlackManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoder;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -92,6 +94,42 @@ class SecurityController extends AbstractController
         }
 
         return $this->render('Security/edit.html.twig', [
+            'form' => $form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/password", name="security.password", methods="GET|POST")
+     */
+    public function passwordEdit(Request $request, $_route, UserPasswordEncoderInterface $passwordEncoder)
+    {
+        $user = $this->getUser();
+
+        $form = $this->createForm(UserType::class, $user, array('route' => $_route));
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $oldPassword = $_POST['user']['oldPassword'];
+
+            // Si l'ancien mot de passe est bon
+            if ($passwordEncoder->isPasswordValid($user, $oldPassword)) {
+                $newEncodedPassword = $passwordEncoder->encodePassword($user, $user->getPlainPassword());
+                $user->setPassword($newEncodedPassword);
+
+                $this->entityManager->persist($user);
+                $this->entityManager->flush();
+
+                $this->addFlash('success', 'Password successfully updated.');
+
+                return $this->redirectToRoute('home');
+            } else {
+                $this->addFlash('error', 'Old password doesn\'t match.');
+//                $form->addError(new FormError('Old password doesn\'t match'));
+            }
+        }
+
+        return $this->render('Security/password.html.twig', [
             'form' => $form->createView()
         ]);
     }

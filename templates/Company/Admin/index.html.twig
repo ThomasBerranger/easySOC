@@ -1,0 +1,76 @@
+{% extends 'base.html.twig' %}
+
+{% block title 'Admin' %}
+
+{% block body %}
+
+    <main class="app-content">
+
+        <div class="row">
+            <div class="col-12">
+                <div class="tile">
+                    <h3 class="tile-title text-center">Companies list</h3>
+
+                    <a href="{{ path('company.add') }}" class="btn btn-success">Create a new company</a>
+                    <br><br>
+
+                    <table id="users" class="table table-hover table-bordered dataTable no-footer">
+                        <thead>
+                        <tr>
+                            <th scope="col">Name</th>
+                            <th scope="col"></th>
+                            <th scope="col"></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for company in companies %}
+                            <tr>
+                                <td scope="row" class="align-middle">{{ company.name }}</td>
+                                <td class="align-middle text-center">
+                                    <a href="{{ path('company.edit', {id: company.id}) }}" class="btn btn-primary"><i class="fas fa-edit"></i>&nbsp; Edit</a>
+                                </td>
+                                <td class="align-middle text-center">
+                                    <a href="#" class="btn btn-danger demoSwal" data-company-id="{{ company.id }}"><i class="far fa-trash-alt"></i>&nbsp; Delete</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        $(document).ready( function () {
+            $('#company').DataTable();
+        } );
+
+        $('.demoSwal').click(function(){
+            companyId = $(this).data('company-id');
+            swal({
+                title: "Are you sure ?",
+                text: "You will not be able to recover this company !",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Yes, delete it",
+                cancelButtonText: "No, cancel",
+                closeOnConfirm: false,
+                closeOnCancel: true
+            }, function(isConfirm) {
+                if (isConfirm) {
+                    window.location = "{{ path('company.delete') }}/"+companyId;
+                    // swal("Deleted!", "Your imaginary file has been deleted.", "success");
+                }
+                // else {
+                //     swal("Cancelled", "Your imaginary file is safe :)", "error");
+                // }
+            });
+        });
+    </script>
+{% endblock %}
