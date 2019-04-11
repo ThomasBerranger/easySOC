@@ -45,7 +45,7 @@
         <div class="container container--host">
             <div class="row">
                 <div class="col-6 HostList--wrapper">
-                    <div class="row">
+                    <div class="row HostListRow">
                         {% for host in hosts %}
                         <div class="HostList">
                             <h6><a href="{{ path('host.edit', {id: host.id}) }}">{{ host.OS }}</a></h6>
@@ -55,7 +55,7 @@
                     </div>
                 </div>
                 <div class="col-6">
-                <h3>Add a host</h3>
+                <h3>Add Host</h3>
                 {{ form_start(form) }}
                 {{ form_row(form.OS) }}
                 {{ form_row(form.Port) }}
@@ -64,7 +64,7 @@
                 
                 
 
-                <button type="submit" class="btn btn-outline-success">Create</button>
+                <button type="submit" class="btn btn-outline-success btn--addhost">Create</button>
 
                 {{ form_end(form) }}
                 </div>        
