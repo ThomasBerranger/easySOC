@@ -27,6 +27,16 @@ class Result
     private $created_at;
 
     /**
+     * @ORM\Column(type="string")
+     */
+    private $result;
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    private $ip;
+
+    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Module", inversedBy="result")
      */
     private $module;
@@ -68,6 +78,30 @@ class Result
     public function setModule(?Module $module): self
     {
         $this->module = $module;
+
+        return $this;
+    }
+
+    public function getResult(): ?string
+    {
+        return $this->result;
+    }
+
+    public function setResult(?string $result): self
+    {
+        $this->result = $result;
+
+        return $this;
+    }
+
+    public function getIp(): ?string
+    {
+        return $this->ip;
+    }
+
+    public function setIp(?string $ip): self
+    {
+        $this->ip = $ip;
 
         return $this;
     }
