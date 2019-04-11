@@ -17,6 +17,9 @@ class HostType extends AbstractType
         $builder
             ->add('OS', TextType::class)
             ->add('Port', IntegerType::class)
+            ->add('IP', TextType::class)
+            ->add('Service', TextType::class)
+            
         ;
     }
 

@@ -6,10 +6,9 @@
 
     <main class="app-content">
 
-        <div class="row">
+        <!--<div class="row">
             <div class="col-12">
                 <div class="tile">
-                    <a href="{{ path('host.create') }}" class="btn btn-primary">Ajouter</a>                    
                     <table id="hosts" class="table table-hover table-bordered dataTable no-footer">
                         <thead>
                         <tr>
@@ -27,12 +26,12 @@
                                 <td class="align-middle">{{ host.OS }}</td>
                                 <td class="align-middle">{{ host.Port }}</td>
                                 <td class="align-middle">
-                                    <a href="{{ path('host.edit', {id: host.id}) }}" class="btn btn-primary">Editer</a>
+                                    <a href="{{ path('host.edit', {id: host.id}) }}" class="btn btn-primary">Edit</a>
                                 </td>
                                 <td class="align-middle">
                                     <form method="post" action ="{{ path('host.delete', {id: host.id})}}">
                                         <input type="hidden" name="_method" value="DELETE">
-                                        <button class="btn btn-danger">Supprimer</button>
+                                        <button class="btn btn-danger">Delete</button>
                                     </form>
                                 </td>
                             </tr>
@@ -42,7 +41,38 @@
 
                 </div>
             </div>
+        </div>-->
+        <div class="container container--host">
+            <div class="row">
+                <div class="col-6 HostList--wrapper">
+                    <div class="row">
+                        {% for host in hosts %}
+                        <div class="HostList">
+                            <h6><a href="{{ path('host.edit', {id: host.id}) }}">{{ host.OS }}</a></h6>
+                            <h6>{{ host.Port }}</h6>
+                        </div>     
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="col-6">
+                <h3>Add a host</h3>
+                {{ form_start(form) }}
+                {{ form_row(form.OS) }}
+                {{ form_row(form.Port) }}
+                {{ form_row(form.IP) }}
+                {{ form_row(form.Service) }}
+                
+                
+
+                <button type="submit" class="btn btn-outline-success">Create</button>
+
+                {{ form_end(form) }}
+                </div>        
+            </div>
         </div>
+
+
+        
 
     </main>
 

@@ -5,15 +5,24 @@
 {% block body %}
 
     <main class="app-content">
-        <div class="container">
+        <div class="container container--edithost">
 
             {{ form_start(form) }}
             {{ form_row(form.OS) }}
             {{ form_row(form.Port) }}
-
+            {{ form_row(form.IP) }}
+            {{ form_row(form.Service) }}
+            
             <button type="submit" class="btn btn-outline-success">Edit</button>
 
             {{ form_end(form) }}
+
+
+            <form method="post" action ="{{ path('host.delete', {id: host.id})}}">
+                <input type="hidden" name="_method" value="DELETE">
+                <button class="btn btn-danger">Delete</button>
+            </form>
+
 
 
         </div>
