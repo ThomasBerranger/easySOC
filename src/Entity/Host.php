@@ -27,12 +27,12 @@ class Host
     private $Port;
 
      /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="string", length=20)
      */
     private $IP;
 
      /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="string", length=20)
      */
     private $Service;
 
