@@ -6,6 +6,7 @@
 
     <main class="app-content">
         <div class="container container--edithost">
+        <h1 class="title--edithost">Edit Host</h1>
 
             {{ form_start(form) }}
             {{ form_row(form.OS) }}
@@ -17,10 +18,9 @@
 
             {{ form_end(form) }}
 
-
             <form method="post" action ="{{ path('host.delete', {id: host.id})}}">
                 <input type="hidden" name="_method" value="DELETE">
-                <button class="btn btn-danger">Delete</button>
+                <button class="btn btn-danger btn--deletehost">Delete</button>
             </form>
 
 

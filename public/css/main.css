@@ -111,6 +111,19 @@ h3{
   transition: all 0.3s ease-in-out;
 }
 
+.btn--deletehost{
+  margin-top: 5px;
+}
+
+.title--edithost{
+  text-align: center;
+}
+
+.btn--addhost{
+  margin: 0 auto;
+  display: block!important;
+}
+
 .HostList{
   width: 150px;
   height: 120px;
@@ -123,6 +136,10 @@ h3{
   text-align: center;
   padding-top: 4%;
   padding-right: 5%;
+}
+
+.HostListRow{
+  margin-left: 8%!important;
 }
 
 .HostList--wrapper{
