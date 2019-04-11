@@ -26,6 +26,16 @@ class Host
      */
     private $Port;
 
+     /**
+     * @ORM\Column(type="integer")
+     */
+    private $IP;
+
+     /**
+     * @ORM\Column(type="integer")
+     */
+    private $Service;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -51,6 +61,30 @@ class Host
     public function setPort(int $Port): self
     {
         $this->Port = $Port;
+
+        return $this;
+    }
+
+    public function getIP(): ?string
+    {
+        return $this->IP;
+    }
+
+    public function setIP(string $IP): self
+    {
+        $this->IP = $IP;
+
+        return $this;
+    }
+
+    public function getService(): ?string
+    {
+        return $this->Service;
+    }
+
+    public function setService(string $Service): self
+    {
+        $this->Service = $Service;
 
         return $this;
     }

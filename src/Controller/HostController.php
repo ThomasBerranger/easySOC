@@ -27,18 +27,9 @@ class HostController extends AbstractController
     /**
      * @Route("/host", name="host.list")
      */
-    public function index()
+    public function index(Request $request, $_route)
     {
         $hosts = $this->em->getRepository(Host::class)->findAll();
-
-        return $this->render('host/index.html.twig', ['hosts' => $hosts]);
-    }
-
-    /**
-     * @Route("/host/create", name="host.create")
-     */
-    public function create(Request $request, $_route)
-    {
         $host = new Host();
         $form = $this->createForm(HostType::class, $host, array('route' => $_route));
     
@@ -52,10 +43,13 @@ class HostController extends AbstractController
             return $this->redirectToRoute('host.list');
         }
 
-        return $this->render('host/create.html.twig', [
-            'form' => $form->createView()
+        return $this->render('host/index.html.twig', [
+            'form' => $form->createView(),
+            'hosts' => $hosts
         ]);
     }
+
+    
 
     /**
      * @Route("/host/edit/{id}", name="host.edit")
@@ -74,7 +68,8 @@ class HostController extends AbstractController
         }
 
         return $this->render('host/edit.html.twig', [
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'host' => $host,
         ]);
     }
 
