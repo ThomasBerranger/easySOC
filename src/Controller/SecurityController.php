@@ -88,6 +88,8 @@ class SecurityController extends AbstractController
             $this->entityManager->persist($user);
             $this->entityManager->flush();
 
+            $this->addFlash('success', 'Account successfully updated.');
+
             $this->slackManager->sendMessage($this->getUser()->getId().' (id) '.$this->getUser()->getUsername().' (username) vient de modifier son compte.');
 
             return $this->redirectToRoute('home');

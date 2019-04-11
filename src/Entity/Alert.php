@@ -81,6 +81,21 @@ class Alert
      */
     private $severity;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $flowId;
+
+    /**
+     * @ORM\Column(type="string", length=25, nullable=true)
+     */
+    private $inIface;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $http;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -238,6 +253,42 @@ class Alert
     public function setSeverity(?int $severity): self
     {
         $this->severity = $severity;
+
+        return $this;
+    }
+
+    public function getFlowId(): ?int
+    {
+        return $this->flowId;
+    }
+
+    public function setFlowId(?int $flowId): self
+    {
+        $this->flowId = $flowId;
+
+        return $this;
+    }
+
+    public function getInIface(): ?string
+    {
+        return $this->inIface;
+    }
+
+    public function setInIface(?string $inIface): self
+    {
+        $this->inIface = $inIface;
+
+        return $this;
+    }
+
+    public function getHttp(): ?string
+    {
+        return $this->http;
+    }
+
+    public function setHttp(?string $http): self
+    {
+        $this->http = $http;
 
         return $this;
     }
