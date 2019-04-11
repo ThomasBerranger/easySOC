@@ -46,16 +46,24 @@
                     <table id="alerts" class="table table-hover table-bordered dataTable no-footer" width="100%">
                         <thead>
                         <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Type</th>
+                            <th scope="col">Ip source</th>
+                            <th scope="col">Port source</th>
+                            <th scope="col">Ip destination</th>
+                            <th scope="col">Port destination</th>
+                            <th scope="col">Id signature</th>
+                            <th scope="col">Severity</th>
                             <th scope="col">Date</th>
                         </tr>
                         </thead>
                         <tbody>
                         {% for alert in alerts %}
                             <tr>
-                                <th scope="row">{{ loop.index }}</th>
-                                <td>{{ alert.type }}</td>
+                                <td>{{ alert.srcIp }}</td>
+                                <td>{{ alert.srcPort }}</td>
+                                <td>{{ alert.destIp }}</td>
+                                <td>{{ alert.destPort }}</td>
+                                <td>{{ alert.signature }}</td>
+                                <td>{{ alert.severity }}</td>
                                 <td>{{ alert.createdAt|date('d/m/Y') }}</td>
                             </tr>
                         {% endfor %}

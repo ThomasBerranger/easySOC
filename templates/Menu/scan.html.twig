@@ -1,16 +1,142 @@
 {% extends 'base.html.twig' %}
 
-{% block body %}
+        {% block stylesheets %}
+            <style>
+                .form-group {
+                    margin-bottom: 0;
+                }
+            </style>
+        {% endblock %}
 
-    <main class="app-content">
+    {% block body %}
 
-    </main>
+        <main class="app-content">
+            <div class="container">
 
-{% endblock %}
+                <div class="row">
+                    <div class="col-12">
+                        <div class="tile">
+                            <h3 class="tile-title text-center">Scans</h3>
 
-{% block javascripts %}
-    <script>
+                            <div class="bs-component">
+                                {% for message in app.flashes('success') %}
+                                    <div class="alert alert-dismissible alert-success">
+                                        <button class="close" type="button" data-dismiss="alert">×</button>
+                                        <strong>{{ message }}</strong>
+                                    </div>
+                                {% endfor %}
+                                {% for message in app.flashes('error') %}
+                                    <div class="alert alert-dismissible alert-danger">
+                                        <button class="close" type="button" data-dismiss="alert">×</button>
+                                        <strong>{{ message }}</strong>
+                                    </div>
+                                {% endfor %}
+                            </div>
 
-    </script>
-{% endblock %}
+                            <form action="" method="post">
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-6 mb-3">
+                                        <div class="form-group">
+                                            <label class="control-label">IP Address</label>
+                                            <input name="ipAddress" class="form-control" type="text" placeholder="127.0.0.1">
+                                        </div>
+                                    </div>
 
+                                    <div class="col-sm-12 col-md-6">
+                                        <div class="form-group row">
+                                            <div class="col-6 col-md-4 col-lg-2">
+                                                <div class="toggle-flip">
+                                                    <label>
+                                                        <input type="checkbox" name="module[1]">
+                                                        <span class="flip-indecator" data-toggle-on="ON" data-toggle-off="OFF"></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <label class="control-label mt-1">Network discovery</label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-6 col-md-4 col-lg-2">
+                                                <div class="toggle-flip">
+                                                    <label>
+                                                        <input type="checkbox" name="module[2]">
+                                                        <span class="flip-indecator" data-toggle-on="ON" data-toggle-off="OFF"></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <label class="control-label mt-1">Vulnerability</label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-6 col-md-4 col-lg-2">
+                                                <div class="toggle-flip">
+                                                    <label>
+                                                        <input type="checkbox" name="module[3]">
+                                                        <span class="flip-indecator" data-toggle-on="ON" data-toggle-off="OFF"></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <label class="control-label mt-1">Header security</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 text-center">
+                                    <button type="submit" class="btn btn-success mx-auto"><i class="far fa-eye"></i> Launch the scan</button>
+                                </div>
+
+                                <div class="col-12 mt-4">
+                                    <table id="vulnerabilities" class="table table-hover table-bordered dataTable no-footer" width="100%">
+                                        <thead>
+                                        {% if results %}
+                                            <tr>
+                                                <th colspan="5">Status :
+                                                    {% if results|length < 5 %}<span class="text-success">healthy</span>
+                                                    {% else %}<span class="text-danger">critic</span>
+                                                    {% endif %}
+                                                </th>
+                                            </tr>
+                                        {% endif %}
+                                        <tr>
+                                            <th scope="col">IP</th>
+                                            <th scope="col">Module</th>
+                                            <th scope="col">Type</th>
+                                            <th scope="col">Date</th>
+                                            <th scope="col">Description</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for result in results %}
+                                            <tr>
+                                                <th scope="row">{{ result.ip }}</th>
+                                                <td>{{ result.module.name }}</td>
+                                                <td>{{ result.result }}</td>
+                                                <td>{{ result.createdAt|date('d/m/Y') }}</td>
+                                                <td>{{ result.description }}</td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+
+    {% endblock %}
+
+    {% block javascripts %}
+        <script type="text/javascript">
+            $(document).ready( function () {
+                $('#demoSelect').select2();
+            } );
+        </script>
+    {% endblock %}

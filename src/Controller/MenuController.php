@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Alert;
+use App\Entity\Result;
 use App\Service\AlertService;
 use App\Service\SlackManager;
 use DateTime;
@@ -58,7 +59,33 @@ class MenuController extends AbstractController
      */
     public function scan()
     {
-        return $this->render('Menu/scan.html.twig');
+        $resultToReturn = [];
+        $postedData = [];
+
+        if (!empty($_POST) && !$_POST['ipAddress']) {
+            $this->addFlash('error', 'Please, specify an IP address');
+        } elseif (!empty($_POST) && !key_exists('module', $_POST)) {
+            $this->addFlash('error', 'Please, specify at least one module');
+        }
+        elseif (!empty($_POST)) {
+            $postedData = $_POST;
+            $results = $this->getDoctrine()->getRepository(Result::class)->findBy(['ip' => $_POST['ipAddress']]);
+
+            /** @var Result $result */
+            foreach ($results as $result) {
+                foreach ($_POST['module'] as $key => $module) {
+                    if ($result->getModule()->getId() == $key) {
+                        array_push($resultToReturn, $result);
+                    }
+                }
+            }
+
+        }
+
+        return $this->render('Menu/scan.html.twig', array(
+            'results' => $resultToReturn,
+            'postedData' => $postedData,
+        ));
     }
 
     /**
